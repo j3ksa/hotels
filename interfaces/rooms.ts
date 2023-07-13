@@ -3,7 +3,7 @@ export interface Rooms {
     ratePlans: RatePlan[]
 }
   
-interface Room {
+export interface Room {
     id: string
     name: string
     longDescription: string
@@ -12,16 +12,23 @@ interface Room {
     bedConfiguration: string
     images: any[]
     facilities: any[]
+    shortDescription?: string
 }
   
 interface Occupancy {
     maxAdults: number
     maxChildren: number
+    maxOverall?: number
 }
   
 interface RatePlan {
     id: string
     shortDescription: string
     prePayment: string
+}
+
+export interface Facility {
+    code: string
+    name: string
 }
   
