@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { getHotels } from './api/getHotels'
 import Loading from '../components/loading'
 import HotelList from '../components/hotelList'
+import Filter from '../components/filter'
 
 export default function Index() {
   
@@ -22,8 +23,6 @@ export default function Index() {
     { retry: 3 }
   )
 
-  console.log('data', hotels)
-
   return (
     <>
       {hotelsStatus === 'success' ? 
@@ -31,6 +30,7 @@ export default function Index() {
           <Head>
             <title>Guestline challenge application</title>
           </Head>
+          <Filter/>
           <HotelList hotels={hotels} />
         </Layout>
         :
