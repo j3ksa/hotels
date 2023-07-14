@@ -19,7 +19,7 @@ const Filter = () => {
         addChild,
         removeAdult,
         removeChild,
-        reset,
+        reset
     } = useStore(useFilterStore)
 
     const handleRating = (rate: number) => {
@@ -50,14 +50,15 @@ const Filter = () => {
     return (
         <div className="w-screen h-[215px] relative mb-32 sm:mb-14 flex items-center justify-center text-black">
             <Image
-                src={'/assets/guestLine.png'}
+                src={'/assets/guestLineWhite.png'}
                 alt="Filtered hotel"
                 width={0}
                 height={0}
-                sizes="100vw"
-                className="w-screen lg:w-fit lg:h-full"
+                sizes="60vw"
+                quality={100}
+                className="w-full sm:w-fit lg:h-full px-2 sm:px-0"
             />
-            <div className="absolute -bottom-28 sm:-bottom-4 z-10 bg-[#13112B] border border-black h-30 flex flex-col sm:flex-row items-center space-y-1 space-x-3 py-2 sm:py-0 px-2 rounded-lg text-[#009FE3]">
+            <div className="absolute -bottom-28 sm:-bottom-4 z-10 bg-[#13112B] border border-black h-30 flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 space-x-3 py-2 sm:py-0 px-2 rounded-lg text-[#009FE3]">
                 <Rating
                     initialValue={starValue}
                     allowFraction={true}
@@ -66,15 +67,15 @@ const Filter = () => {
                 />
                 <div id='adultCounter' className="flex items-center justify-between space-x-2" ref={adultCounterComponent}>
                     <p>Adults</p>
-                    <AiOutlineMinusCircle onClick={removeOneAdult} className="cursor-pointer"/>
+                    <AiOutlineMinusCircle onClick={removeOneAdult} className="cursor-pointer mt-0.5"/>
                     <p className="select-none">{adultCount}</p>
-                    <AiOutlinePlusCircle onClick={addAdult} className="cursor-pointer"/>
+                    <AiOutlinePlusCircle onClick={addAdult} className="cursor-pointer mt-0.5"/>
                 </div>
                 <div id='childCounter' className="flex items-center justify-between space-x-2" ref={childCounterComponent}>
                     <p>Children</p>
-                    <AiOutlineMinusCircle onClick={removeOneChild} className="cursor-pointer"/>
+                    <AiOutlineMinusCircle onClick={removeOneChild} className="cursor-pointer  mt-0.5"/>
                     <p className="select-none">{childrenCount}</p>
-                    <AiOutlinePlusCircle onClick={addChild} className="cursor-pointer"/>
+                    <AiOutlinePlusCircle onClick={addChild} className="cursor-pointer  mt-0.5"/>
                 </div>
                 <button
                     className="flex items-center space-x-2"

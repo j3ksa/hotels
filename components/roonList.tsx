@@ -1,11 +1,14 @@
 import { useQuery } from 'react-query'
 import { getRoomTypes } from "../pages/api/getRoomTypes";
-import { Rooms, Room } from '../interfaces/rooms';
+import { Rooms } from '../interfaces/rooms';
 import Loading from './loading';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useFilterStore } from '../stores/useFilter';
 import { useStore } from 'zustand';
 import RoomModal from './roomModal';
+import { BiSolidBed } from 'react-icons/bi'
+import { BsFillPersonFill } from 'react-icons/bs'
+import { MdChildFriendly } from 'react-icons/md'
 
 interface Props {
     hotelId: string
@@ -21,9 +24,6 @@ const RoomList = ({hotelId}: Props) => {
         adultCount,
         childrenCount,
     } = useStore(useFilterStore)
-
-    const [open, setOpen] = useState(false)
-    const [chosenRoom, setChosenRoom] = useState<Room>()
 
     const getRoomsData = async (id: string) => {
         try {
@@ -57,27 +57,31 @@ const RoomList = ({hotelId}: Props) => {
 
     }, [roomStatus, adultCount, childrenCount])
 
-    const handleRoomPick = (data: Room) => {
-        setChosenRoom(data)
-        setOpen(true)
-    }
-
     return (
         <>
             {roomStatus === 'success' ?
                 <div className={`${displayProperRooms().length < 3 ? 'h-fit' : 'h-[300px] sm:h-[500px]'} overflow-y-auto space-y-2 mt-2`}>
                     {displayProperRooms().map((data, index) => (
-                        <div className={`grid grid-cols-12 bg-[#13112B] rounded-lg relative h-[160px] lg:min-h-[150px]`} key={index}>
-                            <p className='col-span-1 flex flex-col items-center justify-center font-semibold text-base bg-[#E22566] rounded-lg'>#{index+1}</p>
-                            <div className='col-span-3 flex flex-col items-start justify-center rounded-lg p-2 bg-[#13112B]'>
-                                <p className='font-semibold text-base'>{data.name}</p>
-                                <p className='text-base'>Adults: {data.occupancy.maxAdults}</p>
-                                <p className='text-base'>Children: {data.occupancy.maxChildren}</p>
+                        <div className={`flex item justify-between bg-[#13112B] rounded-lg relative h-[180px] lg:min-h-[150px]`} key={index}>
+                            <p className='flex flex-col items-center justify-center font-semibold bg-[#E22566] rounded-lg px-3'>#{index+1}</p>
+                            <div className='flex flex-col sm:flex-row sm:justify-between py-2 px-4 w-full'>
+                                <div className=' flex flex-col items-start justify-center rounded-lg bg-[#13112B]'>
+                                    <div className='font-semibold flex items-center'>
+                                        <BiSolidBed className='mr-1'/>
+                                        {data.name}
+                                    </div>
+                                    <div className='flex items-center'>
+                                        <BsFillPersonFill className='mr-1'/>
+                                        Adults: {data.occupancy.maxAdults}
+                                    </div>
+                                    <div className='flex items-center'>
+                                        <MdChildFriendly className='mr-1'/>
+                                        Children: {data.occupancy.maxChildren}
+                                    </div>
+                                </div>
+                                <p className={`overflow-y-hidden text-sm sm:w-[70%] `}>{data.shortDescription ? data.shortDescription : data.longDescription}</p>
                             </div>
-                            <p className={`col-span-8 py-2 px-4 overflow-y-hidden `}>{data.shortDescription ? data.shortDescription : data.longDescription}</p>
-                            <button onClick={() => handleRoomPick(data)} className={`absolute bottom-0 right-0 z-10 bg-[#13112B] text-[#009FE3] p-2`}>
-                                More
-                            </button>
+                            <RoomModal roomInfo={data}/>
                         </div>
                     ))}
                     {displayProperRooms().length === 0 && 
@@ -90,7 +94,6 @@ const RoomList = ({hotelId}: Props) => {
                 :
                 <Loading/>
             }
-            <RoomModal open={open} setOpen={setOpen} chosenRoom={chosenRoom} setChosenRoom={setChosenRoom}/>
         </>
 
     )

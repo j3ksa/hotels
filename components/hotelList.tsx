@@ -7,6 +7,9 @@ import { useCallback, useState } from "react";
 import RoomList from "./roonList";
 import { useFilterStore } from "../stores/useFilter";
 import { useStore } from "zustand";
+import { BiMap, BiSolidCity } from 'react-icons/bi'
+import { AiOutlineClockCircle, AiFillClockCircle, AiOutlineMail, AiFillPhone} from 'react-icons/ai'
+import Link from "next/link";
 
 interface Props {
     hotels: Hotel[]
@@ -14,6 +17,7 @@ interface Props {
 
 const HotelList = ({hotels}: Props) => {
     const [grabbed, setGrabbed] = useState(false)
+    const [copied, setCopied] = useState(false)
 console.log(hotels)
     const {
         starValue
@@ -31,6 +35,7 @@ console.log(hotels)
 
     return (
         <div className="flex flex-col space-y-4 justify-center items-center">
+            <p className={`px-3 py-1 hidden ${copied && 'block'}`}>Copied</p>
             {displayProperHotels().map(hotel => (
                 <div 
                     key={hotel.id} 
@@ -62,19 +67,52 @@ console.log(hotels)
                             ))}
                         </Carousel>
                         <div className="flex flex-col items-center sm:items-start w-full px-2">
-                            <div className="w-full flex items-start justify-between">
+                            <div className="w-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
                                 <div className="flex flex-col items-start justify-start">
                                     <p className="text-xl font-semibold">{hotel.name}</p>
-                                    <p>{hotel.address1}</p>
-                                    <p>{hotel.address2}</p>
-                                    <p>{hotel.town} <span>{hotel.postcode}</span></p>
-                                    <p>{hotel.country}</p>
+                                    <div className="flex items-center">
+                                        <BiMap className="mr-1"/>
+                                        {hotel.address1}
+                                    </div>
+                                    <div className={`flex items-center ${!hotel.address2 && 'hidden'}`}>
+                                        <BiMap className="mr-1"/>
+                                        {hotel.address2}
+                                    </div>
+                                    <div className="flex items-center space-x-1">
+                                        <BiSolidCity className="mr-1"/>
+                                        <span>{hotel.town}</span>
+                                        <span>{hotel.country}</span>
+                                        <span>{hotel.postcode}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <div className="flex items-center space-x-1">
+                                            <AiOutlineClockCircle/>
+                                            <span>{hotel.checkInHours} :</span>
+                                            <span>{hotel.checkInMinutes}</span>
+                                        </div>
+                                        <div className="flex items-center space-x-1">
+                                            <AiFillClockCircle/>
+                                            <span>{hotel.checkOutHours} :</span>
+                                            <span>{hotel.checkOutMinutes}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <Rating
-                                    initialValue={Number(hotel.starRating)}
-                                    readonly={true}
-                                    SVGclassName="inline"
-                                />
+                                <div className="flex flex-col">
+                                    <Rating
+                                        initialValue={Number(hotel.starRating)}
+                                        readonly={true}
+                                        SVGclassName="inline"
+                                    />
+                                    <div className="flex items-center space-x-1">
+                                        <AiOutlineMail/>
+                                        <Link href={`mailto:${hotel.email}`}>{hotel.email}</Link>
+                                    </div>
+                                    <div className="flex items-center space-x-1">
+                                        <AiFillPhone/>
+                                        {/* <span>{hotel.telephone}</span> */}
+                                        <Link href={`tel::${hotel.telephone}`}>{hotel.telephone}</Link>
+                                    </div>
+                                </div>
                             </div>
                             <p className="text-sm">{hotel.description}</p>
                         </div>
