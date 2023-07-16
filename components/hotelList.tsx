@@ -18,9 +18,9 @@ interface Props {
 const HotelList = ({hotels}: Props) => {
     const [grabbed, setGrabbed] = useState(false)
     const [copied, setCopied] = useState(false)
-console.log(hotels)
+
     const {
-        starValue
+        starValue,
     } = useStore(useFilterStore)
 
     const displayProperHotels = useCallback(() => {
@@ -35,7 +35,7 @@ console.log(hotels)
 
     return (
         <div className="flex flex-col space-y-4 justify-center items-center">
-            <p className={`px-3 py-1 hidden ${copied && 'block'}`}>Copied</p>
+            <p className="w-[95vw] lg:w-[1000px]">{starValue === 0 ? 'All hotels available' : `Available ${displayProperHotels().length} hotels with ${starValue} or more stars`}</p>
             {displayProperHotels().map(hotel => (
                 <div 
                     key={hotel.id} 
@@ -67,8 +67,8 @@ console.log(hotels)
                             ))}
                         </Carousel>
                         <div className="flex flex-col items-center sm:items-start w-full px-2">
-                            <div className="w-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
-                                <div className="flex flex-col items-start justify-start">
+                            <div className="w-full flex flex-col sm:flex-row items-center sm:items-start justify-between mb-2 sm:mb-0">
+                                <div className="flex flex-col items-center sm:items-start justify-start space-y-0.5 max-[400px]:text-sm">
                                     <p className="text-xl font-semibold">{hotel.name}</p>
                                     <div className="flex items-center">
                                         <BiMap className="mr-1"/>
@@ -84,20 +84,24 @@ console.log(hotels)
                                         <span>{hotel.country}</span>
                                         <span>{hotel.postcode}</span>
                                     </div>
-                                    <div className="flex items-center space-x-2">
-                                        <div className="flex items-center space-x-1">
+                                    <div className="flex max-[400px]:flex-col items-center justify-center space-x-2">
+                                        <div className="flex items-center space-x-1 relative group cursor-default select-none">
                                             <AiOutlineClockCircle/>
+                                            <p className="sm:hidden">Check in at</p>
                                             <span>{hotel.checkInHours} :</span>
                                             <span>{hotel.checkInMinutes}</span>
+                                            <p className="px-1 py-1 bg-gray-700 absolute -top-6 hidden group-hover:block rounded-lg text-xs">Check in</p>
                                         </div>
-                                        <div className="flex items-center space-x-1">
+                                        <div className="flex items-center space-x-1 relative group cursor-default select-none">
                                             <AiFillClockCircle/>
+                                            <p className="sm:hidden">Check out at</p>
                                             <span>{hotel.checkOutHours} :</span>
                                             <span>{hotel.checkOutMinutes}</span>
+                                            <p className="px-1 py-1 bg-gray-700 absolute -top-6 hidden group-hover:block rounded-lg text-xs">Check out</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col">
+                                <div className="flex flex-col items-center sm:items-start">
                                     <Rating
                                         initialValue={Number(hotel.starRating)}
                                         readonly={true}
@@ -107,10 +111,12 @@ console.log(hotels)
                                         <AiOutlineMail/>
                                         <Link href={`mailto:${hotel.email}`}>{hotel.email}</Link>
                                     </div>
-                                    <div className="flex items-center space-x-1">
-                                        <AiFillPhone/>
-                                        {/* <span>{hotel.telephone}</span> */}
-                                        <Link href={`tel::${hotel.telephone}`}>{hotel.telephone}</Link>
+                                    <div onClick={setCopied.bind(this, true)} onMouseLeave={setCopied.bind(this, false)} className="relative group cursor-pointer">
+                                        <p onClick={() => navigator.clipboard.writeText(hotel.telephone)} className="flex items-center">
+                                            <AiFillPhone className="mr-1"/>
+                                            {hotel.telephone}
+                                        </p>
+                                        <p className="px-1 py-1 bg-gray-700 absolute -top-6 hidden group-hover:block rounded-lg text-xs">{copied ? 'Copied' : 'Copy'}</p>
                                     </div>
                                 </div>
                             </div>

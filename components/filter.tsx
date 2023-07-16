@@ -54,7 +54,7 @@ const Filter = () => {
                 alt="Filtered hotel"
                 width={0}
                 height={0}
-                sizes="60vw"
+                sizes="55vw"
                 quality={100}
                 className="w-full sm:w-fit lg:h-full px-2 sm:px-0"
             />

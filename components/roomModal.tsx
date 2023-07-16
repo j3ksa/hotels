@@ -121,7 +121,7 @@ const RoomModal = ({roomInfo}: Props) => {
                                         </p>
                                         <div className='grid grid-cols-2 w-full gap-2 px-2'>
                                             {roomInfo.facilities.map((facility: Facility) => (
-                                                <div className='flex items-center space-x-1 even:place-self-stretch even:justify-start even:sm:justify-end text-xs'>
+                                                <div key={facility.code} className='flex items-center space-x-1 even:place-self-stretch even:justify-start even:sm:justify-end text-xs'>
                                                     <FacilityImage Icon={facilities[Number(facility.code) - 1].icon} />
                                                     <p>{facility.name}</p>
                                                 </div>
