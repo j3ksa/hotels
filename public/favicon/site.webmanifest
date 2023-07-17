@@ -1,5 +1,5 @@
 {
-  "name": "Hotels by ŁJ",
+  "name": "Hotel list challenge",
   "short_name": "Hotels",
   "icons": [
     {
@@ -8,12 +8,12 @@
       "type": "image/png"
     },
     {
-      "src": "/favicons/android-chrome-512x512.png",
-      "sizes": "512x512",
+      "src": "/favicons/android-chrome-384x384.png",
+      "sizes": "384x384",
       "type": "image/png"
     }
   ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#E22566",
+  "background_color": "#1b1c5e",
   "display": "standalone"
 }
