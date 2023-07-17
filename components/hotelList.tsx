@@ -45,7 +45,7 @@ const HotelList = ({hotels}: Props) => {
                     key={hotel.id} 
                     className="w-[95vw] lg:w-[1000px] relative"
                 >
-                    <div className="relative flex flex-col sm:min-h-[216px] sm:flex-row p-4 bg-gradient-to-b from-[#e22567ee] to-[#dd4d80] items-center justify-between rounded-lg">
+                    <div className="relative flex flex-col sm:min-h-[260px] sm:flex-row p-4 bg-gradient-to-b from-[#e22567ee] to-[#dd4d80] items-center justify-between rounded-lg">
                         <Carousel
                             showArrows={true}
                             showThumbs={false}
@@ -53,6 +53,7 @@ const HotelList = ({hotels}: Props) => {
                             infiniteLoop={true}
                             dynamicHeight={false}
                             emulateTouch={true}
+                            autoPlay={true}
                             className={`select-none cursor-grab w-[200px] sm:w-[300px] ${grabbed && 'cursor-grabbing'}`}
                             onSwipeStart={setGrabbed.bind(this, true)}
                             onSwipeEnd={setGrabbed.bind(this, false)}
@@ -125,7 +126,7 @@ const HotelList = ({hotels}: Props) => {
                                     </div>
                                 </div>
                             </div>
-                            <p className="text-sm">{hotel.description}</p>
+                            <p className="text-sm lg:text-base">{hotel.description}</p>
                         </div>
                     </div>
                     <RoomList hotelId={hotel.id} />

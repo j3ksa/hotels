@@ -23,7 +23,7 @@ const RoomModal = ({roomInfo}: Props) => {
 
     return (
         <>
-            <button onClick={setOpen.bind(this, true)} className={`absolute bottom-0 right-0 z-10 bg-[#13112B] text-[#009FE3] p-2`}>
+            <button onClick={setOpen.bind(this, true)} className={`absolute bottom-0 right-0 z-10 bg-[#13112B] text-[#009FE3] font-bold p-2`}>
                 More
             </button>
             <Transition.Root show={open} as={Fragment}>
@@ -79,6 +79,7 @@ const RoomModal = ({roomInfo}: Props) => {
                                         infiniteLoop={true}
                                         dynamicHeight={false}
                                         emulateTouch={true}
+                                        autoPlay={true}
                                         className={`select-none cursor-grab w-[200px] sm:w-[300px] ${grabbed && 'cursor-grabbing'}`}
                                         onSwipeStart={setGrabbed.bind(this, true)}
                                         onSwipeEnd={setGrabbed.bind(this, false)}
