@@ -92,10 +92,21 @@ const RoomModal = ({roomInfo}: Props) => {
                                                 sizes="300px"
                                                 quality={100}
                                                 key={index}
-                                                alt={`Hotel img: ${index}`}
+                                                alt={`Room img: ${index}`}
                                             />
                                         ))}
                                     </Carousel>
+                                    {roomInfo.images.length === 0 &&
+                                        <Image
+                                            className="aspect-[3/2] w-[200px] sm:w-[300px]"
+                                            src={'/assets/noImageAvailable.jpg'}
+                                            width={0}
+                                            height={0}
+                                            sizes="300px"
+                                            quality={100}
+                                            alt={`Room img not available`}
+                                        />
+                                    }
                                     <div className='w-full flex flex-col items-start justify-between space-y-2 mt-2 px-6'>
                                         <div className='w-full flex flex-col sm:flex-row items-center justify-around'>
                                             <p>
@@ -119,6 +130,9 @@ const RoomModal = ({roomInfo}: Props) => {
                                         <p className='text-lg font-semibold bg-[#E22566] w-full px-2 rounded-lg'>
                                             Facilities:
                                         </p>
+                                        {roomInfo.facilities.length === 0 &&
+                                            <p className='w-full'>No information about facilities</p>
+                                        }
                                         <div className='grid grid-cols-2 w-full gap-2 px-2'>
                                             {roomInfo.facilities.map((facility: Facility) => (
                                                 <div key={facility.code} className='flex items-center space-x-1 even:place-self-stretch even:justify-start even:sm:justify-end text-xs'>

@@ -3,8 +3,8 @@ import { Rating } from 'react-simple-star-rating'
 import Image from "next/image"
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useCallback, useState } from "react";
-import RoomList from "./roonList";
+import { useCallback, useState, useEffect } from "react";
+import RoomList from "./roomList";
 import { useFilterStore } from "../stores/useFilter";
 import { useStore } from "zustand";
 import { BiMap, BiSolidCity } from 'react-icons/bi'
@@ -32,6 +32,10 @@ const HotelList = ({hotels}: Props) => {
         )
         return sortedHotels
     }, [hotels, starValue])
+
+    useEffect(() => {
+        setTimeout(setCopied.bind(false), 2000)
+    }, [copied])
 
     return (
         <div className="flex flex-col space-y-4 justify-center items-center">
@@ -90,14 +94,14 @@ const HotelList = ({hotels}: Props) => {
                                             <p className="sm:hidden">Check in at</p>
                                             <span>{hotel.checkInHours} :</span>
                                             <span>{hotel.checkInMinutes}</span>
-                                            <p className="px-1 py-1 bg-gray-700 absolute -top-6 hidden group-hover:block rounded-lg text-xs">Check in</p>
+                                            <p className="px-1 py-1 bg-gray-700 absolute -top-6 left-1/3 sm:left-[4px] hidden group-hover:block rounded-lg text-xs truncate">Check in</p>
                                         </div>
                                         <div className="flex items-center space-x-1 relative group cursor-default select-none">
                                             <AiFillClockCircle/>
                                             <p className="sm:hidden">Check out at</p>
                                             <span>{hotel.checkOutHours} :</span>
                                             <span>{hotel.checkOutMinutes}</span>
-                                            <p className="px-1 py-1 bg-gray-700 absolute -top-6 hidden group-hover:block rounded-lg text-xs">Check out</p>
+                                            <p className="px-1 py-1 bg-gray-700 absolute -top-6 left-1/3 sm:left-[2px] hidden group-hover:block rounded-lg text-xs truncate">Check out</p>
                                         </div>
                                     </div>
                                 </div>
@@ -107,16 +111,17 @@ const HotelList = ({hotels}: Props) => {
                                         readonly={true}
                                         SVGclassName="inline"
                                     />
-                                    <div className="flex items-center space-x-1">
+                                    <div className="flex items-center space-x-1 relative group">
                                         <AiOutlineMail/>
                                         <Link href={`mailto:${hotel.email}`}>{hotel.email}</Link>
+                                        <p className="px-1 py-1 bg-gray-700 absolute -top-6 -left-2 hidden group-hover:block rounded-lg text-xs truncate">Click to open email application</p>
                                     </div>
                                     <div onClick={setCopied.bind(this, true)} onMouseLeave={setCopied.bind(this, false)} className="relative group cursor-pointer">
                                         <p onClick={() => navigator.clipboard.writeText(hotel.telephone)} className="flex items-center">
                                             <AiFillPhone className="mr-1"/>
                                             {hotel.telephone}
                                         </p>
-                                        <p className="px-1 py-1 bg-gray-700 absolute -top-6 hidden group-hover:block rounded-lg text-xs">{copied ? 'Copied' : 'Copy'}</p>
+                                        <p className={`px-1 py-1 bg-gray-700 absolute -top-6 left-1/3 group-hover:block rounded-lg text-xs ${copied ? 'block' : 'hidden'}`}>{copied ? 'Copied' : 'Copy'}</p>
                                     </div>
                                 </div>
                             </div>
