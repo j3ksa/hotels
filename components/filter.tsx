@@ -3,7 +3,6 @@ import { Rating } from "react-simple-star-rating"
 import { useRef } from "react"
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import { BiReset } from 'react-icons/bi'
-
 import { useFilterStore } from "../stores/useFilter"
 import { useStore } from "zustand"
 
@@ -56,9 +55,9 @@ const Filter = () => {
                 height={0}
                 sizes="55vw"
                 quality={100}
-                className="w-full sm:w-fit lg:h-full px-2 sm:px-0"
+                className="w-11/12 sm:w-max lg:h-full px-2 sm:px-0"
             />
-            <div className="absolute -bottom-28 sm:-bottom-4 z-10 bg-[#13112B] border border-black h-30 flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 space-x-3 py-2 sm:py-0 px-2 rounded-lg text-[#009FE3]">
+            <div className="absolute -bottom-24 sm:-bottom-6 z-10 bg-[#13112B] border border-black h-30 flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 space-x-3 py-2 sm:py-0 px-2 rounded-lg text-[#009FE3]">
                 <Rating
                     initialValue={starValue}
                     allowFraction={true}
